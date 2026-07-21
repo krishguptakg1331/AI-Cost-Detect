@@ -1,0 +1,44 @@
+###############################################################################
+# Example tfvars — SAFE TO COMMIT
+# Copy this file to terraform.tfvars and fill in your values
+#   cp terraform.tfvars.example terraform.tfvars
+###############################################################################
+
+project_name = "cost-detective"
+environment  = "dev"
+aws_region   = "us-east-1"
+
+# Networking
+vpc_cidr              = "10.0.0.0/16"
+public_subnet_cidrs   = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+private_subnet_cidrs  = ["10.0.11.0/24", "10.0.12.0/24", "10.0.13.0/24"]
+database_subnet_cidrs = ["10.0.21.0/24", "10.0.22.0/24", "10.0.23.0/24"]
+
+# EKS
+eks_cluster_version     = "1.30"
+eks_node_instance_types = ["t3.micro"]
+eks_node_desired_count  = 2
+eks_node_min_count      = 1
+eks_node_max_count      = 4
+eks_node_disk_size      = 50
+
+# RDS PostgreSQL
+db_instance_class          = "db.t3.micro"
+db_allocated_storage       = 20
+db_max_allocated_storage   = 100
+db_engine_version          = "16.3"
+db_name                    = "costdetective"
+db_username                = "costdetective_admin"
+db_port                    = 5432
+db_backup_retention_period = 0
+db_multi_az                = false
+db_deletion_protection     = false
+
+# S3
+s3_force_destroy = true
+
+# Secrets — pass via CLI or environment variables:
+#   terraform apply -var="openai_api_key=sk-..."
+#   export TF_VAR_openai_api_key="sk-..."
+# openai_api_key = ""
+# jwt_secret_key = ""
