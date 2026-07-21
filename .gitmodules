@@ -1,0 +1,3 @@
+[submodule "AI-Cloud-Cost-Detective"]
+	path = AI-Cloud-Cost-Detective
+	url = https://github.com/iam-veeramalla/AI-Cloud-Cost-Detective
