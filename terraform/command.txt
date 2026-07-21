@@ -1,0 +1,27 @@
+# Stop the nodes (terminates the EC2 instances)
+aws eks update-nodegroup-config \
+  --cluster-name cost-detective-dev-eks \
+  --nodegroup-name cost-detective-dev-node-group \
+  --scaling-config minSize=0,maxSize=4,desiredSize=0 \
+  --region us-east-1
+
+# Stop the database
+aws rds stop-db-instance \
+  --db-instance-identifier cost-detective-dev-postgres \
+  --region us-east-1
+
+
+# Start the nodes (spins up new EC2 instances)
+aws eks update-nodegroup-config \
+  --cluster-name cost-detective-dev-eks \
+  --nodegroup-name cost-detective-dev-node-group \
+  --scaling-config minSize=1,maxSize=4,desiredSize=2 \
+  --region us-east-1
+
+# Start the database
+aws rds start-db-instance \
+  --db-instance-identifier cost-detective-dev-postgres \
+  --region us-east-1
+
+
+
