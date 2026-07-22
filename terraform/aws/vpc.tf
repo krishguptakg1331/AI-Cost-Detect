@@ -91,6 +91,15 @@ resource "aws_db_subnet_group" "main" {
   }
 }
 
+resource "aws_db_subnet_group" "main_public" {
+  name       = "${var.project_name}-${var.environment}-db-subnet-group-public"
+  subnet_ids = aws_subnet.public[*].id
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-db-subnet-group-public"
+  }
+}
+
 # ─── Elastic IP for NAT Gateway ─────────────────────────────────────────────
 
 resource "aws_eip" "nat" {
@@ -160,9 +169,14 @@ resource "aws_route_table_association" "private" {
   route_table_id = aws_route_table.private.id
 }
 
-# Database route table (no internet access)
+# Database route table (made public temporarily for local dev access)
 resource "aws_route_table" "database" {
   vpc_id = aws_vpc.main.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.main.id
+  }
 
   tags = {
     Name = "${var.project_name}-${var.environment}-database-rt"

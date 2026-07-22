@@ -1,0 +1,7 @@
+project_name   = "cost-detective"
+environment    = "dev"
+location       = "East US"
+db_username    = "costdetective_admin"
+db_password    = "ChangeMe123!@#"
+aks_node_count = 2
+aks_vm_size    = "Standard_D2s_v3"

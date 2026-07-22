@@ -130,6 +130,16 @@ resource "aws_security_group_rule" "rds_ingress_vpc" {
   security_group_id = aws_security_group.rds.id
 }
 
+resource "aws_security_group_rule" "rds_ingress_public" {
+  description       = "Allow external access to PostgreSQL (local dev)"
+  type              = "ingress"
+  from_port         = var.db_port
+  to_port           = var.db_port
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.rds.id
+}
+
 resource "aws_security_group_rule" "rds_egress" {
   type              = "egress"
   from_port         = 0
